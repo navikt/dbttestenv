@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+    cooldown:
+      default-days: 7
+    groups:
+      security:
+        patterns: ['*']
+        applies-to: "security-updates"
+      version:
+        patterns: ['*']
+        applies-to: "version-updates"
