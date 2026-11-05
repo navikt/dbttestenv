@@ -107,7 +107,7 @@ def assert_container_running() -> Any:
         print("❌ No container found. Run 'testenv init' to create it.")
         raise SystemExit(1)
     if container.status != "running":
-        print("❌ Container is not running. Run 'testenv start' to start it or 'testenv init --rm' to recreate it.")
+        print("❌ Container is not running. Run 'testenv start' to start it or 'testenv init' to recreate it.")
         raise SystemExit(1)
     return container
 
@@ -152,11 +152,16 @@ def cmd_status(args: argparse.Namespace, config: TestenvConfig) -> int:
 def cmd_init(args: argparse.Namespace, config: TestenvConfig) -> int:
     from .container import oracle_test_container_as_is, oracle_test_container
 
-    if args.rm:
-        container = get_container()
-        if container:
-            print("Removing existing container...")
-            container.remove(force=True)
+    container = get_container()
+    if container:
+        if sys.stdin.isatty():
+            print(f"❌ Container '{container.name}' already exists.")
+            if input("Remove it and reinitialize? (y/n): ").lower() != "y":
+                print("Aborting.")
+                return 1
+
+        print("Removing existing container...")
+        container.remove(force=True)
 
     assert_docker_running()
 
@@ -328,8 +333,6 @@ def build_parser() -> argparse.ArgumentParser:
     p_status.set_defaults(func=cmd_status)
 
     p_init = sub.add_parser("init", help="Prepare the container, initialize sources and run dbt.")
-    p_init.add_argument("--remove", "--rm", dest="rm", action="store_true",
-                        help="Remove a running container without confirmation.")
     p_init.set_defaults(func=cmd_init)
 
     p_dbt = sub.add_parser("dbt", help="Run dbt against the test database container.")

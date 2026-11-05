@@ -20,8 +20,7 @@ source .venv/bin/activate
 testenv new        # todo: førstegangs konfigurasjon av prosjektet
 
 testenv diagnose   # sjekk at miljøet er satt opp riktig
-testenv init       # start og initialiser testcontaineren
-testenv init --rm  # slett, start og initialiser testcontaineren
+testenv init       # start og (re-)initialiser testcontaineren
 testenv dbt -- run # kjør dbt mot testdatabasen
 testenv pytest     # kjør alle tester
 testenv stop       # stopp containeren
@@ -143,7 +142,7 @@ Du må eventuelt starte Docker eller Podman manuelt fra deres grafisk grensesnit
 Se om docker fungerer som forventet:
 ```bash
 docker pull hello-world
-docker run -it --rm hello-world
+docker run -it hello-world
 ```
 
 Du må også installere `uv`:
@@ -704,12 +703,14 @@ For eksempel:
 testenv query -f json "SELECT * FROM dvh_ams.int_bosatt_i_norge WHERE ROWNUM <= 5"
 ```
 
-For å slett containeren (f.eks. ved endringer i dbt-modell eller kildetabellene, slik at alt blir opprettet på nytt):
+For å slett containeren:
 ```bash
 testenv remove
+```
+
+For å reinitialisere containeren, f.eks. ved endringer i dbt-modell eller kildetabellene:
+```bash
 testenv init
-# eller
-testenv init --remove
 ```
 
 Det hjelper av og til å omstarte docker/colima/podman.
