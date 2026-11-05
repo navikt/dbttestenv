@@ -723,3 +723,11 @@ Konfigurer IDE-en din som tidligere beskrevet, slik at du kan logge deg på data
 - i vscode, koble til databasen
 - select all the things
 - eventuelt gjør endringer i modellen og kjør `testenv dbt -- run -s modell_navn` for å se om det hjelper
+
+# Bruk av KI
+Dette prosjektet bruker generativ KI.
+
+# Henvendelser
+Spørsmål knyttet til koden eller repositoryet kan stilles som issues her på GitHub.
+
+Interne henvendelser kan sendes via Slack i kanalen #a-team.
