@@ -13,7 +13,7 @@ Dette prosjektet ble splittet fra [dvh_ams](https://github.com/navikt/dvh_ams). 
 
 ```bash
 # Installer dbttestenv i ditt prosjekt
-uv add --group test "git+https://github.com/navikt/dbttestenv"
+uv add --group dev "git+https://github.com/navikt/dbttestenv"
 
 source .venv/bin/activate
 
@@ -163,7 +163,7 @@ Er prosjektet ditt allerede konfigurert er det bare å installer avhengighetene:
 ```bash
 git clone https://github.com/navikt/my_project.git
 cd my_project
-uv sync --group test
+uv sync
 ```
 
 # Konfigurasjon
@@ -175,7 +175,7 @@ git clone https://github.com/navikt/my_project.git
 cd my_project
 
 # Første gang du tar dbttestenv i bruk i ditt prosjekt
-uv add --group test "git+https://github.com/navikt/dbttestenv"
+uv add --group dev "git+https://github.com/navikt/dbttestenv"
 source .venv/bin/activate
 testenv new        # todo
 ```
@@ -320,7 +320,7 @@ sources:
 ```
 
 For å oppdatere modellene, kjør følgende kommando i terminalen: \
-(NB! dersom "error: Failed to spawn: model_generator" oppstår, kjør uv sync --group test først)
+(NB! dersom "error: Failed to spawn: model_generator" oppstår, kjør `uv sync` først)
 
 ```bash
 uv run model_generator generate \
