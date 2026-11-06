@@ -213,11 +213,5 @@ def dbt_schema_is_missing_models(connection: Connection, config: TestenvConfig) 
     )
 
 
-def ensure_pk_column(connection: Connection, table: sqlalchemy.Table):
-    from . import model_generator
-    if "pk_dummy" not in table.columns and not any(col.primary_key for col in table.columns):
-        model_generator.alter_add_primary_key(connection, table)
-
-
 def trunc(dt: datetime) -> datetime:
     return dt.replace(hour=0, minute=0, second=0, microsecond=0)

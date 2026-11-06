@@ -35,24 +35,6 @@ def read_config_yml(file_path: Path) -> dict[str, Any]:
     return config
 
 
-def ensure_primary_key(table: Table):
-    """
-    Adds a dummy primary key column if missing to satisfy sqlalchemy declarative model requirements.
-    """
-
-    if not any(col.primary_key for col in table.columns) and "pk_dummy" not in table.columns:
-        table.append_column(
-            Column(
-                "pk_dummy",
-                NUMBER(38, 0),
-                Identity(),
-                primary_key=True,
-                autoincrement=True
-            ),
-            replace_existing=True
-        )
-
-
 def alter_add_primary_key(connection: Connection, table: Table):
     """Alter the table to add a primary key column if it does not exist."""
     ensure_primary_key(table)
