@@ -13,11 +13,13 @@ dependencies = [
     "sqlacodegen>=3.1.1",
     "sqlalchemy>=2.0.51",
     "testcontainers[oracle-free]>=4.14.0",
+    "pytest>=9.0.0",
 ]
 
 [build-system]
 requires = ["setuptools>=80.7.1"]
 build-backend = "setuptools.build_meta"
+
 
 [project.entry-points."pytest11"]
 dbttestenv = "dbttestenv.pytest_plugin"
@@ -25,6 +27,9 @@ dbttestenv = "dbttestenv.pytest_plugin"
 [project.scripts]
 testenv = "dbttestenv.testenv:main"
 model_generator = "dbttestenv.model_generator:main"
+
+[tool.setuptools]
+package-dir = {"dbttestenv" = "dbttestenv"}
 
 [tool.setuptools.package-data]
 dbttestenv = ["sql/*.sql"]
