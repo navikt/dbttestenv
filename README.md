@@ -351,6 +351,27 @@ Når man jobber lokalt og har endret en dbt modell som man ønsker å generere e
 uv run model_generator generate --testcontainer --models <dbt_schema>.<dbt_model>
 ```
 
+## dbt prosjekt
+
+Legg til i `profiles.yml`:
+```yaml
+    TEST:
+      type: oracle
+      user: "{{env_var('DBT_ENV_SECRET_USER')}}"
+      pass: "{{env_var('DBT_ENV_SECRET_PASS')}}"
+      protocol: tcp
+      # NB: IP i stedet for localhost, for å unngå ipv6 name resolution issues
+      host: 127.0.0.1
+      port: 1521
+      service: "{{env_var('DBT_ENV_SERVICE_NAME')}}"
+      database: "{{env_var('DBT_ENV_DB_NAME')}}"
+      schema: "{{env_var('DBT_DB_SCHEMA')}}"
+      threads: 10
+```
+
+Se også: [Ytelsesoptimering](#ytelsesoptimering) for hvordan man kan unngå å kjøre dbt run unødvendig i tester.
+
+
 # Skriv tester
 
 dbttestenv starter testcontaineren automatisk som del av testoppsett. Har du konfigurasjonen på plass, er dette den enkelst mulige test:
@@ -575,12 +596,9 @@ testenv dbt -- run -s my_dbt_model
 
 ## Utvilking med agenter
 
-Det er skrevet en testing skill i `.github/skills/dbt-testing`. NB at Nav krever at vi bruker en sandbox. `cplt` sandboxen (https://ki-utvikling.nav.no/cplt) har ikke tilgang til docker, så det er nødvendig å sette miljøvariabelen `DBTTESTENV_NO_CONTAINER_MANAGEMENT=true` for å unngå at testenv prøver å starte eller stoppe containeren.
+NB at Nav krever at vi bruker en sandbox. `cplt` sandboxen (https://ki-utvikling.nav.no/cplt) har ikke tilgang til docker, så det er nødvendig å sette miljøvariabelen `DBTTESTENV_NO_CONTAINER_MANAGEMENT=true` for å unngå at testenv prøver å starte eller stoppe containeren.
 
 Da er det nødvendig å kjøre `testenv init` og andre container management kommandoer manuelt utenfor sandboxen.
-
-Se også `.github/skillts/dbt-testing/SKILL.md`.
-
 
 ## SQL Developer / IDE-tilkobling
 
@@ -590,7 +608,7 @@ Installer SQL developer extension i vscode, naviger til SQL developer iconet i f
 |---|------------------------------------------------------------------|
 | Bruker | `system`                                                         |
 | Passord | hent fra `.testcontainer_credentials` filen |
-| Host | `localhost`                                                      |
+| Host | `127.0.0.1`                                                      |
 | Port | `1521`                                                           |
 | Service name | `FREEPDB1`                                                       |
 

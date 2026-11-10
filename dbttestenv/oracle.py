@@ -104,8 +104,6 @@ def get_connection_config() -> ConnectionConfig:
         credentials = write_random_db_credentials_to_disk()
 
     return ConnectionConfig(
-        # this is not actually used by testcontainers, which removed the option to bind to a host and uses the
-        # docker engine default, but we need it to connect to the database from the test code. Assume localhost.
         host="127.0.0.1",
         port=1521,
         service_name="FREEPDB1",

@@ -89,9 +89,12 @@ def oracle_test_container_as_is() -> Generator[ConnectionConfig, None, None]:
     oracle.with_env("TZ", "Europe/Oslo")
     oracle.with_env("ORA_SDTZ", "Europe/Oslo")
 
-    # testcontainer removed the option to specify the hostname, uses docker-engine default
     # we want a fixed container such that IDE/CLI tools can connect to the db
     oracle.with_bind_ports(1521, connection_config.port)
+
+    # testcontainers don't want to support fixed hosts in its with_bind_port interface, but the alternative is
+    # binding to 0.0.0.0 AND ::. So we resort to civil disobedience and set the host to localhost this way:
+    oracle.ports["1521"] = (connection_config.host, connection_config.port)
 
     # fixed name for reuse and error messages should a container be running from before
     oracle.with_name(CONTAINER_NAME)
