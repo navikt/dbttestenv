@@ -6,11 +6,11 @@ from time import sleep
 import docker
 import sqlalchemy
 from testcontainers.core import testcontainers_config
-from testcontainers.oracle import OracleDbContainer
+from testcontainers.community.oracle import OracleDbContainer
 
-from .config import TestenvConfig
-from .dbt_runner import set_dbt_env, run_dbt
-from .oracle import ConnectionConfig, get_connection_config, test_connection, truncate_all_schemas, seed, \
+from dbttestenv.config import TestenvConfig
+from dbttestenv.dbt_runner import set_dbt_env, run_dbt
+from dbttestenv.oracle import ConnectionConfig, get_connection_config, test_connection, truncate_all_schemas, seed, \
     dbt_schema_is_missing_models
 
 CONTAINER_NAME = "testcontainers-oracle-db"

@@ -16,8 +16,8 @@ from itertools import chain
 import pytest
 import sys
 
-from .config import TestenvConfig
-from .diagnose import run_diagnose, check_container_status, test_docker_connection
+from dbttestenv.config import TestenvConfig
+from dbttestenv.diagnose import run_diagnose, check_container_status, test_docker_connection
 
 
 def load_config(config_module: str | None = None) -> TestenvConfig:

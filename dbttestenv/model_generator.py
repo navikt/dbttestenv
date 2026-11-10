@@ -14,7 +14,7 @@ from sqlalchemy.dialects.oracle import NUMBER
 from sqlalchemy.schema import CreateTable
 from yaml import safe_load
 
-from .oracle import ConnectionConfig, get_connection_config
+from dbttestenv.oracle import ConnectionConfig, get_connection_config
 
 logger = logging.getLogger(__name__)
 

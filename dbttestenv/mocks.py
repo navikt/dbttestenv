@@ -6,7 +6,7 @@ from typing import Generator
 import sqlalchemy
 from sqlalchemy import text, Connection
 
-from .dbt_runner import run_dbt
+from dbttestenv.dbt_runner import run_dbt
 
 
 def get_db_obj_types(objects: list[str], connection: Connection, schema: str):

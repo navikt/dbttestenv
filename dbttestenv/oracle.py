@@ -6,7 +6,7 @@ from typing import Iterable
 import sqlalchemy
 from sqlalchemy import text, MetaData, Connection
 
-from .config import TestenvConfig
+from dbttestenv.config import TestenvConfig
 
 TEST_CONTAINER_CREDENTIALS_FILE = Path(".testcontainer_credentials")
 
